@@ -28,6 +28,7 @@ export default class Plugin {
     style,
     styleLibraryDirectory,
     customStyleName,
+    styleTheme,
     camel2DashComponentName,
     camel2UnderlineComponentName,
     fileName,
@@ -44,6 +45,7 @@ export default class Plugin {
     this.style = style || false;
     this.styleLibraryDirectory = styleLibraryDirectory;
     this.customStyleName = normalizeCustomName(customStyleName);
+    this.styleTheme = styleTheme;
     this.fileName = fileName || '';
     this.customName = normalizeCustomName(customName);
     this.transformToDefaultImport =
@@ -82,15 +84,32 @@ export default class Plugin {
         const stylePath = winPath(
           join(this.libraryName, this.styleLibraryDirectory, transformedMethodName, this.fileName),
         );
-        addSideEffect(file.path, `${stylePath}`);
+        if (this.styleTheme) {
+          addSideEffect(file.path, `${stylePath}/style/theme/${this.styleTheme}`);
+        } else {
+          addSideEffect(file.path, `${stylePath}`);
+        }
       } else if (style === true) {
-        addSideEffect(file.path, `${path}/style`);
+        if (this.styleTheme) {
+          addSideEffect(file.path, `${path}/style/theme/${this.styleTheme}`);
+        } else {
+          addSideEffect(file.path, `${path}/style`);
+        }
       } else if (style === 'css') {
-        addSideEffect(file.path, `${path}/style/css`);
+        if (this.styleTheme) {
+          addSideEffect(file.path, `${path}/style/css/theme/${this.styleTheme}`);
+        } else {
+          addSideEffect(file.path, `${path}/style/css`);
+        }
       } else if (typeof style === 'function') {
         const stylePath = style(path, file);
         if (stylePath) {
-          addSideEffect(file.path, stylePath);
+          if (this.styleTheme) {
+            addSideEffect(file.path, `${stylePath}/theme/${this.styleTheme}`);
+          } else {
+            addSideEffect(file.path, stylePath);
+          }
+
         }
       }
     }
