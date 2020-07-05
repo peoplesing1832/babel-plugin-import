@@ -104,12 +104,7 @@ export default class Plugin {
       } else if (typeof style === 'function') {
         const stylePath = style(path, file);
         if (stylePath) {
-          if (this.styleTheme) {
-            addSideEffect(file.path, `${stylePath}/theme/${this.styleTheme}`);
-          } else {
-            addSideEffect(file.path, stylePath);
-          }
-
+          addSideEffect(file.path, stylePath);
         }
       }
     }
