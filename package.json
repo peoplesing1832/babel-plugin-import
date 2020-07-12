@@ -7,26 +7,6 @@
     "url": "https://github.com/ant-design/babel-plugin-import"
   },
   "main": "lib/index.js",
-  "scripts": {
-    "build": "umi-tools build",
-    "test": "umi-tools test --coverage",
-    "debug": "umi-tools test",
-    "lint": "eslint --ext .js src",
-    "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "prepack": "npm run build",
-    "prepublishOnly": "npm run build && np --no-cleanup --yolo --no-publish"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint",
-      "prettier --write"
-    ]
-  },
   "keywords": [
     "babel-plugin",
     "antd"
@@ -51,11 +31,6 @@
     "prettier": "^2.0.5",
     "react-toolbox": "^1.2.5",
     "umi-tools": "^0.4.0"
-  },
-  "babel": {
-    "presets": [
-      "umi"
-    ]
   },
   "files": [
     "src",
